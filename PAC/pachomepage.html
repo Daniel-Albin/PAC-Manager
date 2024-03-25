@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAC-Manager - Password Manager</title>
+    <style>
+        body {
+            font-family: Times New Roman;
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+            color: #333;
+			border: 5px double black;
+        }
+
+        header {
+            background-color: black;
+            padding: 15px;
+            text-align: left;
+            color: gold;
+			display: flex; /* Use Flexbox */
+            justify-content: space-between; /* Align items with space between */
+
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+			text-align: left;
+        }
+		header h2 {
+			margin: 0;
+            font-size: 36px;
+			padding: 0px;
+			color: #C4A484;
+			text-align: right;
+			border: 2px dotted gold; 
+            border-radius: 5px; 
+            padding: 10px 10px; 
+        }
+		
+
+        nav {
+            background-color: darkgoldenrod;
+            text-align: right;
+            padding: 75px;
+			color: black;
+			font-family: monospace;
+			font-weight: bold;
+        }
+
+        nav h1 {
+            color: black;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 40px;
+			font-family:georgia;
+	
+        }
+		
+		nav img {
+		width:250px;
+		height:250px;
+		margin-top: -75px;
+		float:left;
+		}
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px;
+			font-family: Impact;
+			font-size: 30px;
+			
+        }
+
+        .pac-manager-section {
+            text-align: center;
+            margin-top: 50px;
+			padding: 15px;
+			background-color:darkgoldenrod;
+			color: black;
+			font-family: Franklin Gothic;
+			font-size: 30px;
+			border: 2px solid black;
+        }
+
+        .reasons-section {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+			font-family: Impact;
+        }
+
+        .reason {
+            width: 30%;
+            margin-bottom: 20px;
+			margin-top: 20px;
+			margin-left: 10px;
+			margin-right: 10px;
+            background-color: black;
+			color: gold;
+            padding: 20px;
+            border-radius: 20px;
+			font-family: Rockwell;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+		
+          
+        .reason img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .reason h3 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PAC-Manager</h1> 
+		<a href="signup.html" style="text-decoration: none; margin: 5px; font-size: 36px; color: white; text-align: right; border: 2px dotted gold; border-radius: 20px; padding: 20px 20px;"><h2>Sign-Up</h2></a>
+		<a href="login.html" style="text-decoration: none; margin: 5px; font-size: 36px; color: white; text-align: right; border: 2px dotted gold; border-radius: 20px; padding: 20px 20px;"><h2>Login</h2></a>
+		<a href="help.html" style="text-decoration: none; margin: 5px; font-size: 36px; color: white; text-align: right; border: 2px dotted gold; border-radius: 20px; padding: 20px 20px;"><h2>Help</h2></a>
+    
+       
+    </header>
+	
+	
+
+    <nav>
+		<img src="PAC Images Logo/pacman1.png">
+        <h1>PAC-Manager: Where <span style="color: white;">Security</span> Meets <span style="color: white;">Simplicity</span></h1>
+  
+		
+		<p style="text-align:right; font-size: 18px;"> PAC-Manager generates and securely stores strong passwords, eliminating the need for you to remember them. Protect yourself against vulnerabilities caused by weak passwords.</p>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Us</h2>
+            <!-- About Us content goes here -->
+            <p style= "font-family: Garamond; font-size:20px; font-weight:bold;"> PAC-Manager's primary goals is to facilitate the seamless importation of passwords from various platforms into your current application. This feature empowers users to maintain unique passwords for each of their websites and applications, thereby enhancing their online security. Additionally, PAC-Manager offers on-demand password generation coupled with robust strength assessment capabilities to ensure the creation of secure passwords. In the event that PAC-Manager identifies a password as potentially weak, it provides tailored recommendations to fortify its strength, further safeguarding user accounts.</p>
+        </section>
+
+        <section class="pac-manager-section">
+            <h2>Why PAC-Manager?</h2>
+          
+        </section>
+
+        <section class="reasons-section">
+            <div class="reason">
+                <!-- Reason 1 -->
+                <img src="PAC Images Logo/icon4.png"> 
+                <h3>Best-In-Class Encryption</h3>
+                <p>State-of-the-art encryption to keep your data secure.</p>
+            </div>
+            <div class="reason">
+                <!-- Reason 2 -->
+                <img src="PAC Images Logo/icon1.png"> 
+                <h3>Multi-Platform Support</h3>
+                <p>Access your passwords on any device, anytime, anywhere.</p>
+            </div>
+            <div class="reason">
+                <!-- Reason 3 -->
+                <img src="PAC Images Logo/icon3.png" style="width:100px; height:100px">
+                <h3>Password Strength Checking</h3>
+                <p>Ensure your passwords are strong and secure with built-in strength checking.</p>
+            </div>
+           
+        </section>
+    </div>
+</body>
+</html>
