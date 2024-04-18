@@ -42,13 +42,13 @@ def getTOTP(email):
     conn.close()
     return totp
 
-def addCredentials(email, url, username, password):
+def addCredentials(email, url, username, password, name):
     conn = psycopg2.connect("dbname=pacmanager user=postgres password=goodyear")
     cur = conn.cursor()
     cur.execute("SELECT masterpass, salt FROM pacusers WHERE email = %s;",[email])
     res = cur.fetchall()
     masterpass = res[0][0]
-    cur.execute("INSERT INTO pacvault (email, url, username, password) VALUES (%s, %s, %s, %s);", (email, url, username, encrypt_password(password, masterpass, generate_salt())))
+    cur.execute("INSERT INTO pacvault (email, url, username, password, name) VALUES (%s, %s, %s, %s);", (email, url, username, encrypt_password(password, masterpass, generate_salt(), name)))
     conn.commit()
     cur.close()
     conn.close()
@@ -57,7 +57,7 @@ def addCredentials(email, url, username, password):
 def getCredentials(email, accountid):
     conn = psycopg2.connect("dbname=pacmanager user=postgres password=goodyear")
     cur = conn.cursor()
-    cur.execute("SELECT url, username, password FROM pacvault WHERE email = %s AND accountid = %s;",(email, accountid))
+    cur.execute("SELECT url, username, password , name FROM pacvault WHERE email = %s AND accountid = %s;",(email, accountid))
     res = cur.fetchall()
     cur.close()
     conn.close()
