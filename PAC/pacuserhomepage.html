@@ -237,13 +237,29 @@
 
     // Function to generate password
     function generatePassword() {
-        // Your password generation logic goes here
+        fetch('/password_gen', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
         alert("Password generated!");
     }
     
     // Function to check strength
     function checkStrength() {
-        // Your strength checking logic goes here
+        fetch('/password_check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({password: "password to check"})
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
         alert("Checking password strength...");
     }
 
