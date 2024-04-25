@@ -1,5 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, request, jsonify
 import re
+
+app = Flask(__name__)
 
 def password_check(password):
     strength = 0 
@@ -33,3 +35,11 @@ def password_print(strength):
         print("Password is weak.")
     else:
         print("Password is very weak.")
+
+
+@app.route('/password_check', methods=['POST'])
+def check_password():
+    data = request.get_json()
+    password = data.get('password')
+    strength = password_check(password)
+    return jsonify({"strength": strength})
