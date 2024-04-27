@@ -2,14 +2,14 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/database_name'  # I need to replace this with PostgreSQL connection URI
+app.config['SQLALCHEMY_DATABASE_URI'] = 'database_uri_here' #Needs to be updated with our PostgreSQL URI still
 db = SQLAlchemy(app)
 
 class VaultEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    website = db.Column(db.String(255))
-    username = db.Column(db.String(255))
-    password = db.Column(db.String(255))
+    website = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 @app.route('/addToVault', methods=['POST'])
 def addToVault():
@@ -26,35 +26,50 @@ def addToVault():
         db.session.add(new_entry)
         # Commit the session to save the changes to the database
         db.session.commit()
-        # Retrieve the ID of the newly inserted record
-        new_id = new_entry.id
         return jsonify({'message': 'Entry added successfully'})
     except Exception as e:
         # If an error occurs, rollback the session
         db.session.rollback()
         return jsonify({'message': 'Error occurred while adding entry', 'error': str(e)})
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 @app.route('/editVault', methods=['POST'])
-def editVault(website, username, password, ID, vault):
-    vault[ID] = (website, username, password)
-    print("Login information updated successfully")
-    #Updates previously entered information
-    print("Editing vault:", request.json)
-    return jsonify({"message": "Information edited in the vault"})
+def editVault():
+    data = request.json
+    website = data.get('website')
+    username = data.get('username')
+    password = data.get('password')
+    ID = data.get('id')  # Assuming the frontend sends the ID to identify the entry to edit
+    vault_entry = VaultEntry.query.filter_by(id=ID).first()
+
+    if vault_entry:
+        vault_entry.website = website
+        vault_entry.username = username
+        vault_entry.password = password
+        try:
+            db.session.commit()
+            return jsonify({'message': 'Entry edited successfully'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'message': 'Error occurred while editing entry', 'error': str(e)})
+    else:
+        return jsonify({'message': 'Entry not found'})
 
 @app.route('/deleteFromVault', methods=['POST'])
-def deleteFromVault(website, username, password, ID, vault):
-    if ID in vault:
-        del vault[ID]
-        print("Entry deleted successfully.")
+def deleteFromVault():
+    data = request.json
+    ID = data.get('id')  # Assuming the frontend sends the ID to identify the entry to delete
+    vault_entry = VaultEntry.query.filter_by(id=ID).first()
+
+    if vault_entry:
+        try:
+            db.session.delete(vault_entry)
+            db.session.commit()
+            return jsonify({'message': 'Entry deleted successfully'})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'message': 'Error occurred while deleting entry', 'error': str(e)})
     else:
-        print("Invalid Entry ID Provided")
+        return jsonify({'message': 'Entry not found'})
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
