@@ -106,5 +106,5 @@ def profile():
 if __name__ == "__main__":
     #To Do: find how to get a real SSL Cert
     #turn off debug when running with host = 0.0.0.0
-    #app.run(ssl_context='adhoc', host='0.0.0.0')
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')
+    #app.run(debug=True)
