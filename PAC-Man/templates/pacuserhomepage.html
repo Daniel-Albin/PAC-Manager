@@ -235,9 +235,9 @@
     // Function to save credentials
     function saveCredentials() {
         // Get the input values from the dropdown text boxes
-		var website = document.querySelector('#inputDropdownOptions[name='website']").value;
+		var website = document.querySelector("#inputDropdownOptions[name='website']").value;
 		var username = document.querySelector("#inputDropdownOptions[name='username']").value;
-    		var password = document.querySelector("#inputDropdownOptions[name='password']").value; 
+    	var password = document.querySelector("#inputDropdownOptions[name='password']").value; 
 
 		// Prepare the data object to be sent in the fetch request
 		var data = {
@@ -275,7 +275,7 @@
         })
         .then(response => response.json())
         .then(data => {
-			var passwordInput = document.querySelector(#inputDropdownOptions[type='password']");
+			var passwordInput = document.querySelector("#inputDropdownOptions[type='password']");
 			passwordInput.value = data.password;
 		});
         alert("Password generated!");
@@ -283,7 +283,7 @@
     
     // Function to check strength
     function checkStrength() {
-		var passwordInput = document.querySelector(#inputDropdownOptions[type='passwod']");
+		var passwordInput = document.querySelector("#inputDropdownOptions[type='passwod']");
         fetch('/password_check', {
             method: 'POST',
             headers: {
@@ -335,7 +335,7 @@
         })
         .then(response => response.json())
         .then(data => {
-			var passwordInput = document.querySelector(#inputDropdownOptions[type='password']");
+			var passwordInput = document.querySelector("#inputDropdownOptions[type='password']");
 			passwordInput.value = data.password;
 		});
         alert("Password generated!");
@@ -343,7 +343,7 @@
     
     // Function to check strength for plus button
     function checkPlusStrength() {
-		var passwordInput = document.querySelector(#inputDropdownOptions[type='passwod']");
+		var passwordInput = document.querySelector("#inputDropdownOptions[type='passwod']");
         fetch('/password_check', {
             method: 'POST',
             headers: {
