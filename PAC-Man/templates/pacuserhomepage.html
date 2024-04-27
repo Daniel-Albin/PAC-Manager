@@ -234,12 +234,34 @@
 
     // Function to save credentials
     function saveCredentials() {
-        var inputs = document.querySelectorAll(".dropdown-content input");
-        inputs.forEach(function(input) {
-            input.disabled = true;
-        });
-        var dropdownButton = document.querySelector(".dropdown button");
-        dropdownButton.classList.remove("edit-mode");
+        // Get the input values from the dropdown text boxes
+		var website = document.querySelector('#inputDropdownOptions[name='website']").value;
+		var username = document.querySelector("#inputDropdownOptions[name='username']").value;
+    	var password = document.querySelector("#inputDropdownOptions[name='password']").value; 
+
+		// Prepare the data object to be sent in the fetch request
+		var data = {
+			website: website,
+			username: username,
+			password: password
+		};
+
+		// Make a POST request to Flask route with collected data
+		fetch('/addToVault', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then(response => response.json())
+		.then(data => console.log(data)); //Print the response (test)
+
+		// Disable input fields after save
+		var inputs = document.querySelectorAll("#inputDropdownOptions input");
+		inputs.forEach(function(input) {
+			input.disabled = true;
+		});
     }
 
     // Function to generate password
