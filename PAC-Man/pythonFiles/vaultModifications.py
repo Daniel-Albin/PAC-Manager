@@ -28,7 +28,7 @@ def addToVault():
         db.session.commit()
         # Retrieve the ID of the newly inserted record
         new_id = new_entry.id
-        return jsonify({'message': 'Entry added successfully', 'id': new_id})
+        return jsonify({'message': 'Entry added successfully'})
     except Exception as e:
         # If an error occurs, rollback the session
         db.session.rollback()
