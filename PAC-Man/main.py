@@ -1,7 +1,7 @@
 #import tkinter
 from flask import Flask, redirect, render_template, request, session
 from pythonFiles.OTP import gen_OTP_account, verify_OTP, deleteQR
-from pythonFiles.Database import insert_to_database, verify_user, getTOTP, valid_email
+from pythonFiles.Database import insert_to_database, verify_user, getCredentials, getTOTP, valid_email
 from pythonFiles.strengthchecking import password_check
 
 app = Flask(__name__)
@@ -103,8 +103,16 @@ def pVault():
 def profile():
     return render_template("pacprofile.html")
 
+@app.route('/all')
+def user_passwords():
+    user = "test22@gmail.com"
+    accountid = getCredentials(user)
+    print(accountid)
+    print(accountid)
+    return render_template("CRUDtest.html", accountid=accountid)
+
 if __name__ == "__main__":
     #To Do: find how to get a real SSL Cert
     #turn off debug when running with host = 0.0.0.0
-    app.run(debug=False, host='0.0.0.0')
-    #app.run(debug=True)
+    #app.run(ssl_context='adhoc', host='0.0.0.0')
+    app.run(debug=True)

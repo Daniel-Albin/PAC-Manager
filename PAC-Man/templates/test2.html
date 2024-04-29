@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <style>
+        body {
+            font-family: Times New Roman, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+        }   
+        .container {
+            display: flex;
+        }
+        .header {
+            background-color: black;
+            color: gold; 
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 5px double gold;
+        }
+
+        .side-panel {
+            width: 200px;
+            background-color: darkgoldenrod;
+            padding: 20px;
+            height: auto;
+            border: 10px double black;
+        }
+
+        .side-panel h3 {
+            margin-top: 0;
+            font-size: 32px;
+            color: black;
+            font-family: georgia;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options li {
+            margin-bottom: 10px;
+        }
+
+        .options li a {
+            color: black;
+            text-decoration: none;
+            font-family: Impact;
+            font-size: 20px;
+        }
+
+        .options li a:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .password-vault {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .password-item {
+            width: calc(33.33% - 10px);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        /* Style for plus button */
+        .plus-button {
+            width: 15px;
+            padding: 10px; /* Adjusted padding to make the button smaller */
+            background-color: darkgoldenrod;
+            color: black;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 36px; /* Adjusted font size to make the button smaller */
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .plus-button:hover {
+            background-color: gold;
+            color: black; /* Added color change on hover */
+        }
+
+        /* Style for dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+            min-width: 100%;
+        }
+
+        /* Style for dropdown button */
+        .dropdown button {
+            padding: 10px;
+            background-color: black;
+            color: gold;
+			border-radius: 10px;
+            cursor: pointer;
+            font-family: georgia;
+            font-size: 25px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Style for dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+			border-radius: 10px;
+            background-color: darkgoldenrod;
+            width: 100%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Style for dropdown options */
+        .dropdown-content input {
+            display: block;
+            width: 97%;
+			border-radius: 10px;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background-color: lightgray;
+            color: black;
+        }
+        
+        .dropdown-content input::placeholder {
+            color: black;
+        }
+        
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="side-panel">
+        <h3>Options</h3>
+        <ul class="options">
+            <li><a href="/profile" method="post">Profile</a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+        <img src="/static/paclogoopen.png" style="height: 300px; width:200px;">
+        
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>PAC-Manager Password Vault</h1>
+        </div>
+        <input type="text" class="search-bar" placeholder="Search passwords...">
+        <h2 style="font-family: monospace">Stored Passwords:</h2>
+        <div class="password-vault">
+            <div class="dropdown">
+                <button onclick="toggleDropdown()">Name</button>
+                <div id="dropdownOptions" class="dropdown-content">
+                    <input id="inputDropdownOptions" type="text" placeholder="URL" disabled>
+                    <input id="inputDropdownOptions" type="text" placeholder="Username" disabled>
+                    <input id="inputDropdownOptions" type="text" placeholder="Password" disabled>
+                    <button class="save-button" onclick="saveCredentials()" style="width: 18%; font-size: 18px;">Save</button> 
+                    <button onclick="toggleEditMode()" style="width: 18%; font-size: 18px;">Edit</button>
+                    <button class="delete-button" style="width: 18%; font-size: 18px;">Delete</button>
+                    <button class="strength-checker-button" onclick="checkStrength()" style="width: 25%; font-size: 18px;">Strength Checker</button>
+                    <button class="generate-button" onclick="generatePassword()" style="width: 18%; font-size: 18px;">Generate</button> <!-- Add generate button -->
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="plus-button" onclick="togglePlusDropdown()" style= "text-align: center;">+</button>
+                <div id="plusDropdownOptions" class="dropdown-content">
+                    <input type="text" placeholder="URL" disabled>
+                    <input type="text" placeholder="Username" disabled>
+                    <input type="text" placeholder="Password" disabled>
+                    <button class="save-button" onclick="savePlusCredentials()" style="width: 18%; font-size: 18px;">Save</button> 
+                    <button onclick="togglePlusEditMode()" style="width: 18%; font-size: 18px;">Edit</button>
+                    <button class="delete-button" style="width: 18%; font-size: 18px;">Delete</button>
+                    <button class="strength-checker-button" onclick="checkPlusStrength()" style="width: 25%; font-size: 18px;">Strength Checker</button>
+                    <button class="generate-button" onclick="generatePlusPassword()" style="width: 18%; font-size: 18px;">Generate</button> <!-- Add generate button -->
+                </div>
+            </div>
+            <img src="/static/lockicon.png" style="display: block; margin: 0 auto; height: 300px; width: 300px;">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle dropdown visibility
+    function toggleDropdown() {
+        var dropdownContent = document.getElementById("dropdownOptions");
+        dropdownContent.style.display === "none" ? dropdownContent.style.display = "block" : dropdownContent.style.display = "none";
+    }   
+    
+    // Function to toggle edit mode
+    var editModeActive = false;
+    function toggleEditMode() {
+        var dropdownButton = document.querySelector(".dropdown button");
+        var inputs = document.querySelectorAll(".dropdown-content input");
+        dropdownButton.classList.toggle("edit-mode");
+        inputs.forEach(function(input) {
+            input.disabled = !input.disabled;
+            if (editModeActive) {
+            input.style.backgroundColor = "lightgray"; // Reset to default background color
+            } else {
+            input.style.backgroundColor = "gold"; // Set background color on first click
+            }
+        });
+        editModeActive = !editModeActive;
+    }
+
+    // Function to save credentials
+    function saveCredentials() {
+        // Get the input values from the dropdown text boxes
+		var website = document.querySelector("#inputDropdownOptions[name='website']").value;
+		var username = document.querySelector("#inputDropdownOptions[name='username']").value;
+    	var password = document.querySelector("#inputDropdownOptions[name='password']").value; 
+
+		// Prepare the data object to be sent in the fetch request
+		var data = {
+			website: website,
+			username: username,
+			password: password
+		};
+
+		// Make a POST request to Flask route with collected data
+		fetch('/addToVault', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then(response => response.json())
+		.then(data => console.log(data)); //Print the response (test)
+
+		// Disable input fields after save
+		var inputs = document.querySelectorAll("#inputDropdownOptions input");
+		inputs.forEach(function(input) {
+			input.disabled = true;
+		});
+    }
+
+    // Function to generate password
+    function generatePassword() {
+        fetch('/password_gen', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+			var passwordInput = document.querySelector("#inputDropdownOptions[type='password']");
+			passwordInput.value = data.password;
+		});
+        alert("Password generated!");
+    }
+    
+    // Function to check strength
+    function checkStrength() {
+		var passwordInput = document.querySelector("#inputDropdownOptions[type='passwod']");
+        fetch('/password_check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password: passwordInput.value })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+        alert("Checking password strength...");
+    }
+
+    //GARBAGE PAST THIS
+
+    // Function to toggle dropdown visibility for plus button
+    function togglePlusDropdown() {
+        var dropdownContent = document.getElementById("plusDropdownOptions");
+        dropdownContent.style.display === "none" ? dropdownContent.style.display = "block" : dropdownContent.style.display = "none";
+    }
+    
+    // Function to toggle edit mode for plus button
+    function togglePlusEditMode() {
+        var dropdownButton = document.querySelectorAll(".dropdown button")[1];
+        var inputs = document.querySelectorAll("#plusDropdownOptions input");
+        dropdownButton.classList.toggle("edit-mode");
+        inputs.forEach(function(input) {
+            input.disabled = !input.disabled;
+        });
+    }
+
+    // Function to save credentials for plus button
+    function savePlusCredentials() {
+        var inputs = document.querySelectorAll("#plusDropdownOptions input");
+        inputs.forEach(function(input) {
+            input.disabled = true;
+        });
+        var dropdownButton = document.querySelectorAll(".dropdown button")[1];
+        dropdownButton.classList.remove("edit-mode");
+    }
+
+   // Function to generate password for plus button
+   function generatePlusPassword() {
+        fetch('/password_gen', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+			var passwordInput = document.querySelector("#inputDropdownOptions[type='password']");
+			passwordInput.value = data.password;
+		});
+        alert("Password generated!");
+    }
+    
+    // Function to check strength for plus button
+    function checkPlusStrength() {
+		var passwordInput = document.querySelector("#inputDropdownOptions[type='passwod']");
+        fetch('/password_check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password: passwordInput.value })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+        alert("Checking password strength...");
+    }
+</script>
+
+</body>
+</html>
+

@@ -9,13 +9,13 @@ def password_check(password):
     if len(password) > 8: #makes sure password is atleast of length 8
         strength +=1 
     
-    if  re.search(r'[A-Z]', password): #checks to see if password contains atleast 1 capital letter
+    if re.search(r'[A-Z]', password): #checks to see if password contains atleast 1 capital letter
         strength +=1 
     
-    if  re.search(r'[a-z]', password): #checks to see if pasword contains atleast 1 lowercase letter 
+    if re.search(r'[a-z]', password): #checks to see if pasword contains atleast 1 lowercase letter 
         strength +=1 
     
-    if  re.search(r'\d', password): #checks to see if password contains atleast 1 digit
+    if re.search(r'\d', password): #checks to see if password contains atleast 1 digit
         strength +=1 
     
     if any(not c.isalnum() for c in password): #checks to see if passwrod contains atleast 1 special character 
@@ -36,10 +36,10 @@ def password_print(strength):
     else:
         print("Password is very weak.")
 
-
 @app.route('/password_check', methods=['POST'])
 def check_password():
     data = request.get_json()
     password = data.get('password')
     strength = password_check(password)
     return jsonify({"strength": strength})
+

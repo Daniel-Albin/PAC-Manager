@@ -36,3 +36,31 @@ document.getElementById("filterInput").addEventListener("input", function() {
 
 </body>
 </html>
+
+
+<body>
+  <div>
+      <table class="table table-hover" style="width: 700px;">
+          <thead class="thead-dark">
+              <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">URL</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Password</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for id in accountid %}
+                  <tr>
+                      <td>{{id[3]}}</td>
+                      <td>{{id[0]}}</td>
+                      <td>{{id[1]}}</td>
+                      <td>{{id[2]}}</td>
+                      <td><button>Edit</button></td>
+                      <td><button>Delete</button></td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</body>
