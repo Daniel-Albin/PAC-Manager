@@ -249,7 +249,7 @@ function checkStrength(id) {
         body: JSON.stringify(data)
     })
     .then(response => response.json())
-    .then(data => alert(data.strength));
+    .then(data => alert(data));
 }
 
 function searchBar() {
