@@ -10,7 +10,7 @@ def gen_OTP_account(email):
     insert_otp(email, totp)
     code = email + ".png"
     qrcode.make(totp).save(code)
-    shutil.move("~PAC-Man/" + code, "~/PAC-Man/static")
+    shutil.move("/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/" + code, "/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/static")
 
 #verify that the user code is valid
 def verify_OTP(passcode, totp):
@@ -20,7 +20,7 @@ def verify_OTP(passcode, totp):
 def genQR(email, totp):
     code = email + ".png"
     qrcode.make(totp).save(code)
-    shutil.move("~/PAC-Man/" + code, "~/PAC-Man/static")
+    shutil.move("/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/" + code, "/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/static")
 
 def deleteQR(email):
-    os.system("rm ~/PAC-Man/static/" + email + ".png")
+    os.system("rm /Users/visharipal/Desktop/Spring\ 2024/Software\ Engineering/PAC-Man/static/" + email + ".png")

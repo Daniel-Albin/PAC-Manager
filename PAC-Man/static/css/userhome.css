@@ -147,6 +147,33 @@ body {
     color: black;
 }
 
+/* Style for plus dropdown content */
+.plusDropdown-content {
+    display: none;
+    position: absolute;
+    border-radius: 10px;
+    background-color: darkgoldenrod;
+    width: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Style for plus dropdown options */
+.plusDropdown-content input {
+    display: block;
+    width: 97%;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-color: lightgray;
+    color: black;
+}
+
+.plusDropdown-content input::placeholder {
+    color: black;
+}
+
 /* Style for dropdown container */
 .dropdown {
     position: relative;
