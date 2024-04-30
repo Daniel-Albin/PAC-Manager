@@ -233,7 +233,6 @@ function generatePassword(id) {
         var passwordInput = document.getElementById("inputDropdownPWord-" + id);
         passwordInput.value = data.password;
     });
-    alert("Password generated!");
 }
 
 // Function to check strength
