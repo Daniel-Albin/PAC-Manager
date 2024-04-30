@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def password_gen(password_length):
 
-    characters = string.printable
+    characters = string.printable.replace(' ','')
 
     secure_password = ''.join(secrets.choice(characters) for i in range(password_length))
 
