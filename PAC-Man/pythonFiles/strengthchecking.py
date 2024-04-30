@@ -18,7 +18,7 @@ def password_check(password):
     if any(not c.isalnum() for c in password): #checks to see if passwrod contains atleast 1 special character 
         strength +=1 
     
-    return password_print(strength)
+    return strength
 
 def password_print(strength):
     if strength == 5:

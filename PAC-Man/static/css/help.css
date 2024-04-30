@@ -62,35 +62,18 @@ label {
 .info-item span {
     color: black;
 }
-
-.generate-qrcode-button {
-    background-color: black;
-    color: gold;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+.qa-section{
+    margin-left: 20px;
+}
+.question{
+    margin-bottom: 20px;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: black;
 }
 
-.generate-qrcode-button:hover {
-    background-color: darkgoldenrod;
-}
-
-.button-container {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.generate-qrcode-button {
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 10px; /* Adjust as needed */
-}
-
-.qr-code-image {
-    width: 350px;
-    height: 350px;
-    padding-top: 30px;
-    display: none; /* Hide by default */
+.answer{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: black;
 }

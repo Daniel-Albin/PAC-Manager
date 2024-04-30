@@ -1,8 +1,7 @@
-#import tkinter
 from flask import Flask, redirect, render_template, request, session, jsonify
-from pythonFiles.OTP import gen_OTP_account, verify_OTP, deleteQR
+from pythonFiles.OTP import gen_OTP_account, verify_OTP
 from pythonFiles.Database import insert_to_database, verify_user, addCredentials, getCredentials, updateCredentials, deleteCredentials, getTOTP, valid_email, getPass
-from pythonFiles.strengthchecking import password_check
+from pythonFiles.strengthchecking import password_check, password_print
 from pythonFiles.Pac_Man_encryption import decrypt_password
 from pythonFiles.passwordgen import password_gen
 
@@ -30,7 +29,6 @@ def login():
 
 @app.route('/OTPnewuser', methods=['POST'])
 def newuserOTP():
-#To Do: Add case for if user already exists in Database
     email = request.form["email"].lower()
     password1 = request.form["masterpass1"]
     password2 = request.form["masterpass2"]
@@ -38,37 +36,41 @@ def newuserOTP():
     if not valid_email(email):
         session['error_message'] = "Email is not valid" 
         return redirect('/signup-retry')
-    #check if user correctly entered password both times
-    if  password1 == password2:
-        pstrength = password_check(password1)
-        print(password1)
-        if pstrength < 5:
-            session['error_message'] = "Weak password, Have: 8 characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character"
-            return redirect('/signup-retry')
-        else:
-            insert_to_database(email, password1)
-            gen_OTP_account(email)
-            image = "static/" + email + ".png"
-            session['image'] = image
-            session['email'] = email
-            return render_template('newOTP.html', image=image)
-    else:
-        session['error_message'] = "Passwords do not match" 
+    
+    try: 
+        getPass(email)
+        session['error_message'] = "Email already exists" 
         return redirect('/signup-retry')
+    except:
+        #check if user correctly entered password both times
+        if  password1 == password2:
+            pstrength = password_check(password1)
+            if pstrength < 5:
+                session['error_message'] = "Weak password, Have: 8 characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character"
+                return redirect('/signup-retry')
+            else:
+                insert_to_database(email, password1)
+                gen_OTP_account(email)
+                image = "static/" + email + ".png"
+                session['image'] = image
+                session['email'] = email
+                return render_template('newOTP.html', image=image)
+        else:
+            session['error_message'] = "Passwords do not match" 
+            return redirect('/signup-retry')
 
 @app.route('/OTP', methods=['POST'])
 def OTP():
     email = request.form["email"].lower()
     password = request.form["masterpass"]
     #search databse for entry matching email/pass credential
-    valid = verify_user(email, password)
-    session['email'] = email
+    try:
+        valid = verify_user(email, password)
+        session['email'] = email
+    except:
+        valid = False
     #if SQL Query finds a math valid = true
     if valid:
-        try:
-            deleteQR(email)
-        except:
-            pass
         return render_template("OTP.html")
     else:
        return render_template("errorlogin.html")
@@ -81,7 +83,6 @@ def newsignin():
     code = request.form["OTP"]
 
     if verify_OTP(code, totp):
-        deleteQR(email)
         return redirect ('/PAC-Vault')
     else:
         return render_template('newOTP.html', image=image)
@@ -153,7 +154,8 @@ def check_password():
     data = request.get_json()
     password = data.get('password')
     strength = password_check(password)
-    return jsonify({"strength": strength})
+    msg = password_print(strength)
+    return jsonify({"strength": msg})
 
 @app.route('/password_gen', methods=['POST'])
 def generate_password():
@@ -168,7 +170,12 @@ def generate_password():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     account = session.get('email', None)
-    return render_template("pacprofile.html", account=account)
+    image = "static/" + account + ".png"
+    return render_template("pacprofile.html", image=image, account=account, )
+
+@app.route('/help')
+def help():
+    return render_template("help.html")
 
 if __name__ == "__main__":
     #turn off debug when running with host = 0.0.0.0

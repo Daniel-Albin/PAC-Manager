@@ -22,6 +22,7 @@ function spawnDropdown(name, url, username, password) {
     newDropdown.classList.add('dropdown');
 
     var button = document.createElement('button');
+    button.classList.add('vault-entry')
     button.textContent = name;
     button.onclick = (function(counter) {
         return function() {
@@ -250,4 +251,19 @@ function checkStrength(id) {
     })
     .then(response => response.json())
     .then(data => alert(data.strength));
+}
+
+function searchBar() {
+    var searchInput = document.getElementById("search-bar").value.toLowerCase();;
+    console.log(searchInput)
+    var passwords = document.querySelectorAll(".vault-entry");
+    
+    passwords.forEach(password => {
+        var passwordData = password.innerText.toLowerCase();
+        if (passwordData.includes(searchInput)) {
+            password.style.display = "block";
+        } else {
+            password.style.display = "none";
+        }
+    });
 }

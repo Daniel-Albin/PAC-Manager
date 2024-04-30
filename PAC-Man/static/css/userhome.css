@@ -58,7 +58,7 @@ body {
     padding: 20px;
 }
 
-.search-bar {
+#search-bar {
     width: 95%;
     padding: 10px;
     margin-bottom: 20px;

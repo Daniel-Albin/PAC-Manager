@@ -15,7 +15,6 @@ def hash_master_password(master_password):
     hashed_password = ph.hash(master_password.encode())
     return hashed_password
 
-#TO DO: Handle argon2 passwords do not match error
 def verify_hash_password(hashed_pass, password):
     ph = PasswordHasher()
     return ph.verify(hashed_pass, password)

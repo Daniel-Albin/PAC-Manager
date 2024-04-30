@@ -21,6 +21,3 @@ def genQR(email, totp):
     code = email + ".png"
     qrcode.make(totp).save(code)
     shutil.move("/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/" + code, "/Users/visharipal/Desktop/Spring 2024/Software Engineering/PAC-Man/static")
-
-def deleteQR(email):
-    os.system("rm /Users/visharipal/Desktop/Spring\ 2024/Software\ Engineering/PAC-Man/static/" + email + ".png")

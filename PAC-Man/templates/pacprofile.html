@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="/static/css/profile.css">
+    <script src="/static/js/profile.js"></script>
+
 </head>
 <body>
 
@@ -13,25 +15,27 @@
         <h3>Options</h3>
         <ul class="options">
             <li><a href="/PAC-Vault" method="post">Homepage</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="/help">Help</a></li>
         </ul>
+        <img src="/static/images/paclogoopen.png" style="height: 300px; width:200px;">
     </div>
     
     <div class="profile-info">
         <h2>Your Profile</h2>
         <div class="info-item">
             <label>Email:</label>
-            <span>{{ account }}</span>
+            <span id="email">{{ account }}</span>
         </div>
         <h3>Add 2-Factor Device:</h3>
-        <button class="generate-qrcode-button" onclick="generateQRCode()">Generate QR Code</button>
+        <div class="button-container">
+            <button class="generate-qrcode-button" onclick="generateQRCode()">Generate QR Code</button>
+            {%- if image -%}
+            <img class="qr-code-image" src={{ image }}>
+            {%- endif -%}
+        </div>
     </div>
+    
+    
 </div>
-<script>
-    function generateQRCode() {
-        //code to generate QR code goes here
-        alert("QR Code will be generated here!");
-    }
-</script>
 </body>
 </html>

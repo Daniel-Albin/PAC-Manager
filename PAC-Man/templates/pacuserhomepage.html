@@ -12,17 +12,17 @@
         <h3>Options</h3>
         <ul class="options">
             <li><a href="/profile" method="post">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="/help">Help</a></li>
         </ul>
         <img src="/static/images/paclogoopen.png" style="height: 300px; width:200px;">
-        
     </div>
 
     <div class="main-content">
         <div class="header">
             <h1>PAC-Manager Password Vault</h1>
-        </div>
-        <input type="text" class="search-bar" placeholder="Search passwords...">
+        </div>  
+        <input type="text" id="search-bar" oninput="searchBar()" placeholder="Search passwords...">
+
         <h2 style="font-family: monospace">Stored Passwords:</h2>
         <div class="dropdown">
             <button onclick="togglePlusDropdown()">+</button>
@@ -40,7 +40,7 @@
         <div class="password-vault">
             {% for id in accountid %}
             <div class="dropdown">
-                <button onclick="toggleDropdown({{id[4]}})">{{id[3]}}</button>
+                <button class="vault-entry" onclick="toggleDropdown({{id[4]}})">{{id[3]}}</button>
                 <div id={{id[4]}} class="dropdown-content">
                     <input id="inputDropdownURL-{{id[4]}}" type="password" value={{id[0]}} disabled>
                     <input id="inputDropdownUName-{{id[4]}}" type="password" value={{id[1]}} disabled>
