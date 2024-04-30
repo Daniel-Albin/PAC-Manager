@@ -1,0 +1,113 @@
+body {
+    font-family: Times New Roman;
+    margin: 0;
+    padding: 0;
+    background-color: beige;
+    color: #333;
+    border: 5px double black;
+}
+
+header {
+    background-color: black;
+    padding: 15px;
+    text-align: left;
+    color: gold;
+    display: flex; /* Use Flexbox */
+    justify-content: space-between; /* Align items with space between */
+
+}
+
+header h1 {
+    margin: 0;
+    font-size: 40px;
+    text-align: left;
+}
+header h2 {
+    margin: 0;
+    font-size: 36px;
+    padding: 0px;
+    color: #C4A484;
+    text-align: right;
+    border: 2px dotted gold; 
+    border-radius: 5px; 
+    padding: 10px 10px; 
+}
+
+
+nav {
+    background-color: darkgoldenrod;
+    text-align: right;
+    padding: 75px;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+nav h1 {
+    color: black;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 40px;
+    font-family:georgia;
+
+}
+
+nav img {
+width:250px;
+height:250px;
+margin-top: -75px;
+float:left;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px;
+    font-family: Impact;
+    font-size: 30px;
+    
+}
+
+.pac-manager-section {
+    text-align: center;
+    margin-top: 50px;
+    padding: 15px;
+    background-color:darkgoldenrod;
+    color: black;
+    font-family: Franklin Gothic;
+    font-size: 30px;
+    border: 2px solid black;
+}
+
+.reasons-section {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-family: Impact;
+}
+
+.reason {
+    width: 30%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: black;
+    color: gold;
+    padding: 20px;
+    border-radius: 20px;
+    font-family: Rockwell;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+  
+.reason img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.reason h3 {
+    margin: 0;
+}

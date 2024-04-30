@@ -1,0 +1,80 @@
+body {
+    font-family: Times New Roman, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: beige;
+}
+
+.container {
+    display: flex;
+}
+
+.side-panel {
+    width: 200px;
+    background-color: darkgoldenrod;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh;
+    border: 10px double black;
+}
+
+.side-panel h3 {
+    margin-top: 0;
+    font-size: 32px;
+    color: black;
+    font-family: georgia;
+}
+
+.options {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options li {
+    margin-bottom: 10px;
+}
+
+.options li a {
+    color: black;
+    text-decoration: none;
+    font-family: Impact;
+    font-size: 20px;
+}
+
+.options li a:hover {
+    text-decoration: underline;
+}
+
+.profile-info {
+    flex: 1;
+    padding: 20px;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.info-item span {
+    color: black;
+}
+.qa-section{
+    margin-left: 20px;
+}
+.question{
+    margin-bottom: 20px;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.answer{
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: black;
+}
