@@ -14,8 +14,7 @@ body {
     background-color: darkgoldenrod;
     color: #fff;
     padding: 20px;
-    box-sizing: border-box;
-    height: 100vh;
+    height: auto;
     border: 10px double black;
 }
 

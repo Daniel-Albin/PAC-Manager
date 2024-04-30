@@ -1,8 +1,10 @@
 #import tkinter
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, jsonify
 from pythonFiles.OTP import gen_OTP_account, verify_OTP, deleteQR
-from pythonFiles.Database import insert_to_database, verify_user, getCredentials, getTOTP, valid_email
+from pythonFiles.Database import insert_to_database, verify_user, addCredentials, getCredentials, updateCredentials, deleteCredentials, getTOTP, valid_email, getPass
 from pythonFiles.strengthchecking import password_check
+from pythonFiles.Pac_Man_encryption import decrypt_password
+from pythonFiles.passwordgen import password_gen
 
 app = Flask(__name__)
 
@@ -97,22 +99,82 @@ def signin():
     
 @app.route('/PAC-Vault', methods=['GET', 'POST'])
 def pVault():
-    return render_template("pacuserhomepage.html")
-    
+    email = session.get('email', None)
+    password = getPass(email)
+
+    accountid = getCredentials(email)
+    decryptCred =[]
+    for cred in accountid:
+        cred = list(cred)
+        cred[2] = decrypt_password(cred[2], password)
+        decryptCred.append(cred)
+
+    return render_template("pacuserhomepage.html", accountid=decryptCred)
+
+@app.route('/addTo-Vault', methods=['GET', 'POST'])
+def addToVault():
+    email = session.get('email', None)
+    data = request.json
+
+    name = data.get('name')
+    url = data.get('url')
+    username = data.get('username')
+    password = data.get('password')
+
+    addCredentials(email, url, username, password, name)
+
+    return redirect('/PAC-Vault')
+
+@app.route('/update-Vault', methods=['GET', 'POST'])
+def updateVault():
+    email = session.get('email', None)
+    data = request.json
+
+    accountid = data.get('id')
+    url = data.get('url')
+    username = data.get('username')
+    password = data.get('password')
+        
+    updateCredentials(email, accountid, url, username, password)
+
+    return redirect('/PAC-Vault')
+
+@app.route('/deleteFromVault', methods=['POST'])
+def deleteFromVault():
+    data = request.json
+    ID = data.get('id')
+
+    deleteCredentials(ID)
+
+    return redirect('/PAC-Vault')
+
+@app.route('/password_check', methods=['POST'])
+def check_password():
+    data = request.get_json()
+    password = data.get('password')
+    strength = password_check(password)
+    return jsonify({"strength": strength})
+
+@app.route('/password_gen', methods=['POST'])
+def generate_password():
+    data = request.get_json()
+    password_length = data.get('password_length')
+    if not password_length:
+        password_length = 12  
+    password = password_gen(password_length)
+    return jsonify({"password": password})
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    return render_template("pacprofile.html")
+    account = session.get('email', None)
+    return render_template("pacprofile.html", account=account)
 
-@app.route('/all')
-def user_passwords():
-    user = "test22@gmail.com"
-    accountid = getCredentials(user)
-    print(accountid)
-    print(accountid)
-    return render_template("CRUDtest.html", accountid=accountid)
+@app.route('/help')
+def help():
+    return render_template("help.html")
 
 if __name__ == "__main__":
-    #To Do: find how to get a real SSL Cert
     #turn off debug when running with host = 0.0.0.0
     #app.run(ssl_context='adhoc', host='0.0.0.0')
     app.run(debug=True)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Filtering</title>
+
+</head>
+<body>
+
+<input type="text" id="filterInput" placeholder="Type to filter">
+<ul id="list">
+  <li class="list-item">Item 1</li>
+  <li class="list-item">Item 2</li>
+  <li class="list-item">Item 3</li>
+  <li class="list-item">Another Item</li>
+  <li class="list-item">Some Item</li>
+  <li class="list-item">Filtered Item</li>
+</ul>
+
+<script>
+document.getElementById("filterInput").addEventListener("input", function() {
+  var filter = this.value.toUpperCase();
+  var items = document.querySelectorAll("#list .list-item");
+
+  items.forEach(function(item) {
+    var text = item.textContent.toUpperCase();
+    if (text.indexOf(filter) > -1) {
+      item.style.display = ""; // Show the item if it matches the filter
+    } else {
+      item.style.display = "none"; // Hide the item if it doesn't match
+    }
+  });
+});
+</script>
+
+</body>
+</html>
